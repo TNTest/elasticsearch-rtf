@@ -7,6 +7,8 @@ COPY . $ES_HOME
 
 RUN $ES_HOME/bin/plugin -install mobz/elasticsearch-head
 
+RUN $ES_HOME/bin/plugin -install river-csv -url https://github.com/AgileWorksOrg/elasticsearch-river-csv/releases/download/2.2.1/elasticsearch-river-csv-2.2.1.zip
+
 # ES_MAX_MEM, ES_MIN_MEM or ES_HEAP_SIZE only (max = min)
 # RUN git clone https://github.com/elastic/elasticsearch-servicewrapper /usr/share/elasticsearch-servicewrapper
 # RUN cp -r /user/share/elasticsearch-servicewrapper/service $ES_HOME/bin/
@@ -14,10 +16,12 @@ RUN $ES_HOME/bin/plugin -install mobz/elasticsearch-head
 # RUN service elasticsearch start
 
 RUN mkdir -p $ES_HOME/data
+RUN mkdir -p $ES_HOME/data-csv
 
-VOLUME /usr/share/elasticsearch-rtf/data
+# VOLUME /usr/share/elasticsearch-rtf/data
 
-COPY bin/docker-entrypoint.sh /
+VOLUME ["/usr/share/elasticsearch-rtf/data", "/usr/share/elasticsearch-rtf/data-csv"]
+
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
