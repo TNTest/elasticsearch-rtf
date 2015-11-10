@@ -4,6 +4,7 @@ ENV PATH $ES_HOME/bin:$PATH
 
 #  RUN git clone -b 1.7.1 git://github.com/medcl/elasticsearch-rtf.git $ES_HOME
 COPY . $ES_HOME
+COPY bin/docker-entrypoint.sh /
 
 RUN $ES_HOME/bin/plugin -install mobz/elasticsearch-head
 
